@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length = 50)
@@ -22,7 +23,7 @@ class Product(models.Model):
     price = models.DecimalField(default = 0, max_digits = 10, decimal_places = 2)
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     description = models.CharField(max_length = 200)
-    image = models.ImageField(upload_to='uploads/product')
+    image = models.ImageField(upload_to='uploads/')
     is_sale = models.BooleanField(default=False)
     sale_price = models.DecimalField(default = 0, max_digits = 10, decimal_places = 2)
 
