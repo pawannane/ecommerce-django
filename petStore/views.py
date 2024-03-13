@@ -8,8 +8,9 @@ def home(request):
     products = Product.objects.all()
     return render(request, 'index.html', {'products': products})
 
-def product(request):
-    return render(request, 'product.html')
+def product(request, id):
+    product = Product.objects.get(id=id)
+    return render(request, 'product.html', {'product': product})
 
 def login_user(request):
     if request.method == "POST":
