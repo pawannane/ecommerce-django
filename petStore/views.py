@@ -10,7 +10,10 @@ def home(request):
 
 def product(request, id):
     product = Product.objects.get(id=id)
-    return render(request, 'product.html', {'product': product})
+
+    products = Product.objects.all().exclude(id=id)[:4]
+
+    return render(request, 'product.html', { 'product': product, 'products': products })
 
 def login_user(request):
     if request.method == "POST":
