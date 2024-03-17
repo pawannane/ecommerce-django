@@ -11,7 +11,7 @@ def home(request):
 def product(request, id):
     product = Product.objects.get(id=id)
 
-    products = Product.objects.all().exclude(id=id)[:4]
+    products = Product.objects.filter(category=product.category).exclude(id=id)[:4]
 
     return render(request, 'product.html', { 'product': product, 'products': products })
 
