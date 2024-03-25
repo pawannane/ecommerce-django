@@ -1,0 +1,131 @@
+
+
+
+{% extends "base.html" %} 
+{% block content %}
+
+<!-- Navigation-->
+{% include 'nav.html' %}
+
+<!-- Product section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6">
+        <img
+          class="card-img-top mb-5 mb-md-0"
+          src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+          alt="..."
+        />
+      </div>
+      <div class="col-md-6">
+        <!-- <div class="small mb-1">SKU: BST-498</div> -->
+        <!-- This div is for Product Name -->
+        <div class="form-floating mb-4">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control form-control-lg border-dark"
+            placeholder="Enter your E-mail"
+          />
+          <label for="name">Name</label>
+        </div>
+        <div class="fs-5 mb-4">
+         <!-- This div is for Price -->
+          <div class="form-floating mb-4">
+            <input
+              type="number"
+              id="prize"
+              name="price"
+              class="form-control form-control-lg border-dark"
+              placeholder="Enter your E-mail"
+            />
+            <label for="prize">Prize</label>
+          </div>
+           <!-- This div is for Sale Price -->
+          <div class="form-floating mb-4">
+            <input
+              type="number"
+              id="sale_prize"
+              name="email"
+              class="form-control form-control-lg border-dark"
+              placeholder="Enter your E-mail"
+            />
+            <label for="sale_prize">sale_prize</label>
+          </div>
+         <!-- checkbox for is_sale -->
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+              name="is_sale"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Is_Sale
+            </label>
+          </div>
+        <!-- fieldset of category -->
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Category</legend>
+            {% for i in categories %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  {{ i.name }}
+                </label>
+            </div>
+            {% endfor %}
+            </fieldset>
+        </div>
+        <!-- teatarea for description -->
+        <div class="form-floating mb-3" id="example_count">
+          <textarea
+            class="form-control word_count border-dark"
+            id="message"
+            type="text"
+            placeholder="Enter your message here..."
+            style="height: 10rem"
+            data-sb-validations="required"
+          ></textarea>
+          <label for="message">Description</label>
+          {% comment %}
+          <div class="invalid-feedback" data-sb-feedback="message:required">
+            A message is required.
+          </div>
+          {% endcomment %}
+        </div>
+        <div class="d-flex">
+          <input
+            class="form-control text-center me-3"
+            id="inputQuantity"
+            type="num"
+            value="1"
+            style="max-width: 3rem"
+          />
+          <button class="btn btn-outline-dark flex-shrink-0" type="button">
+            <i class="bi-cart-fill me-1"></i>
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Related items section-->
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
+  </div>
+</footer>
+<!-- Bootstrap core JS-->
+{% comment %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+{% endcomment %} 
+{% endblock %}

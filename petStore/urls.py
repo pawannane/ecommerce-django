@@ -8,4 +8,7 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('register/', register_user, name='register'),
     path('logout/', logout_user, name="logout"),
+    path('create/', create_product, name="create"),
+    path('category/<int:id>/', category, name="category"),
+    path('about/', about, name="about"),
 ]

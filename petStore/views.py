@@ -6,7 +6,9 @@ from .models import *
 # Create your views here.
 def home(request):
     products = Product.objects.all()
-    return render(request, 'index.html', {'products': products})
+    categories = Category.objects.all()
+
+    return render(request, 'index.html', {'products':products , "categories":categories})
 
 def product(request, id):
     product = Product.objects.get(id=id)
@@ -50,3 +52,29 @@ def register_user(request):
 def logout_user(request):
     logout(request)
     return redirect("home")
+
+def create_product(request):
+    categories = Category.objects.all()
+    return render(request, "create_product.html", {"categories": categories})
+
+def category(request, id):
+    categories = Category.objects.all()
+    products = Product.objects.all()
+
+    if id =='all': 
+        return render (request , "category.html" , { "categories":categories , "products":products })
+
+    for category in categories:
+        product_count = Product.objects.filter(category = category).count()
+        category.product_count = product_count
+
+
+    products = Product.objects.filter(category = id)
+
+    return render(request, "category.html", {"categories": categories, "products": products})
+
+def about(request):
+    products = Product.objects.all()
+    categories = Category.objects.all()
+
+    return render(request, "about.html", { "categories":categories , "products":products })

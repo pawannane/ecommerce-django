@@ -1,5 +1,6 @@
 {% extends "base.html" %}  
 {% block content %}
+    {% include "nav.html" %}
     <!-- Header-->
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
@@ -22,7 +23,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">{{product.name}}</h5>
+                                <h5 class="fw-bolder">{{ product.name }}</h5>
                                 <!-- Product price-->
                                 ${{ product.price }}
                             </div>
