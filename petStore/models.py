@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Category(models.Model):
@@ -41,4 +42,11 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product
-    
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.user)

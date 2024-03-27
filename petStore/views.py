@@ -78,3 +78,20 @@ def about(request):
     categories = Category.objects.all()
 
     return render(request, "about.html", { "categories":categories , "products":products })
+
+def cart(request):
+    cart_product = Cart.objects.all()
+    categories = Category.objects.all()
+
+    return render(request, "cart.html", { "categories":categories , "cart_product":cart_product })
+
+def add_to_cart(request, id):
+    cart_product = Cart.objects.all()
+    categories = Category.objects.all()
+
+    user = request.user
+    product = Product.objects.get(id = id)
+    new_cart = Cart.objects.create(user = user, product = product)
+    new_cart.save()
+
+    return render(request, "cart.html", {"categories":categories,  "cart_product":cart_product })
