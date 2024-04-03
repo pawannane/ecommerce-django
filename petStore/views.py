@@ -2,8 +2,38 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 from .models import *
+import razorpay
+from django.conf import settings
+
+# authorize razorpay client with API Keys.
+razorpay_client = razorpay.Client(
+    auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
 
 # Create your views here.
+def homepage(request):
+    currency = 'INR'
+    amount = 20000  # Rs. 200
+ 
+    # Create a Razorpay Order
+    razorpay_order = razorpay_client.order.create(dict(amount=amount,
+                                                       currency=currency,
+                                                       payment_capture='0'))
+ 
+    # order id of newly created order.
+    razorpay_order_id = razorpay_order['id']
+    callback_url = 'paymenthandler/'
+ 
+    # we need to pass these details to frontend.
+    context = {}
+    context['razorpay_order_id'] = razorpay_order_id
+    context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
+    context['razorpay_amount'] = amount
+    context['currency'] = currency
+    context['callback_url'] = callback_url
+ 
+    return render(request, 'pay.html', context=context)
+
+
 def home(request):
     products = Product.objects.all()
     categories = Category.objects.all()
@@ -84,6 +114,7 @@ def cart(request):
     categories = Category.objects.all()
 
     return render(request, "cart.html", { "categories":categories , "cart_product":cart_product })
+
 
 def add_to_cart(request, id):
     cart_product = Cart.objects.all()

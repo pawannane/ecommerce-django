@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+RAZOR_KEY_ID = "rzp_test_Ygu8G1ZIDVCrXK"
+RAZOR_KEY_SECRET = "i2wiEsMWizrNkdtECGsBXFnK"
+
 
 # Application definition
 
