@@ -129,7 +129,7 @@ def add_to_cart(request, id):
         return redirect("display_cart")
     return redirect('login')
 
-def delete_user(request , id):
+def delete_product(request , id):
     cc = Cart.objects.get(id = id)
     cc.delete()
     return redirect("display_cart")
