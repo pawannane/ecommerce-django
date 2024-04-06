@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+
+{% include 'nav.html' %}
+
+{% for i in cart_product %}
+
+<div class="card mb-3 container" style="max-width: 650px;">
+  <div class="row g-0 container" >
+  
+   <div class="col-md-5">
+     <img src="{{ i.product.image.url }}" class="img-fluid rounded-start" alt="...">
+   </div>
+   <div class="col-md-3">
+     <div class="card-body">
+       <h5 class="card-title">{{ i.product.name }}</h5>
+       <p class="card-text">{{ i.product.description }}</p>
+       <p class="card-text"><small class="text-body-secondary">Price: ${{ i.product.price }}</small></p>
+       <p class="card-text"><small class="text-body-secondary">Quantity: {{ i.quantity }}</small></p>
+       <a  href="{% url 'delete_product' i.id %}">delete </a>
+     </div>
+   </div>
+ </div>
+</div>
+
+{% endfor %}
+<div class="col-xl-3 container">
+    <div class="mt-5 mt-lg-0">
+        <div class="card border shadow-none">
+            <div class="card-header bg-transparent border-bottom py-3 px-4">
+                <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
+            </div>
+            <div class="card-body p-4 pt-2">
+
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <tbody>
+                            <tr>
+                                <td>Sub Total :</td>
+                                <td class="text-end">{{ sub_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>Discount : </td>
+                                <td class="text-end">-{{ discounted_price }}</td>
+                            </tr>
+                            <tr>
+                                <td>Shipping Charge :</td>
+                                <td class="text-end">$ 25</td>
+                            </tr>
+                            <tr>
+                                <td>Estimated Tax : </td>
+                                <td class="text-end">$ 18.20</td>
+                            </tr>
+                            <tr class="bg-light">
+                                <th>Total :</th>
+                                <td class="text-end">
+                                    <span class="fw-bold">{{ final_price }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table-responsive -->
+            </div>
+        </div>
+        <button id="pay-btn">pay now</button>
+    </div>
+</div>
+{% if sub_total %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    var options = {
+       
+      // Enter the Key ID generated from the Dashboard
+      key: "{{ context.razorpay_merchant_key }}", 
+       
+      // Amount is in currency subunits.
+      // Default currency is INR. Hence, 
+      // 50000 refers to 50000 paise
+      amount: "{{ context.razorpay_amount }}", 
+      currency: "{{ context.currency }}",
+       
+      // Your/store name.
+      name: "Dj Razorpay", 
+       
+      // Pass the `id` obtained in the response of Step 1
+      order_id: "{{ context.razorpay_order_id }}", 
+      callback_url: "{{ context.callback_url }}",
+    };
+     
+    // initialise razorpay with the options.
+    var rzp1 = new Razorpay(options);
+     
+    // add event listener to the payment button.
+    document.getElementById("pay-btn").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
+  </script>
+{% endif %}
+
+{% endblock %}
